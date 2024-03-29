@@ -255,16 +255,16 @@ func SunoChat(c map[string]interface{}, ck string) (interface{}, *ErrorResponse)
 
 			if allComplete {
 				var markdown strings.Builder
-				markdown.WriteString(fmt.Sprintf("# %s\n\n", v2GetFeedData[0]["title"]))
+				markdown.WriteString(fmt.Sprintf("#🎵 %s\n\n", v2GetFeedData[0]["title"]))
 				markdown.WriteString(fmt.Sprintf("%s\n\n", v2GetFeedData[0]["metadata"].(map[string]interface{})["prompt"]))
 				markdown.WriteString(fmt.Sprintf("## 版本一\n\n"))
-				markdown.WriteString(fmt.Sprintf("视频链接：%s\n\n", v2GetFeedData[0]["video_url"]))
-				markdown.WriteString(fmt.Sprintf("音频链接：%s\n\n", v2GetFeedData[0]["audio_url"]))
-				markdown.WriteString(fmt.Sprintf("图片链接：%s\n\n", v2GetFeedData[0]["image_large_url"]))
+				markdown.WriteString(fmt.Sprintf("🎙️音频：[点击播放](%s)\n\n", v2GetFeedData[0]["audio_url"]))
+				markdown.WriteString(fmt.Sprintf("📽️视频：[点击播放](%s)\n\n", v2GetFeedData[0]["video_url"]))
+				markdown.WriteString(fmt.Sprintf("封面图：![图片](%s)\n\n", v2GetFeedData[0]["image_large_url"]))
 				markdown.WriteString(fmt.Sprintf("## 版本二\n\n"))
-				markdown.WriteString(fmt.Sprintf("视频链接：%s\n\n", v2GetFeedData[1]["video_url"]))
-				markdown.WriteString(fmt.Sprintf("音频链接：%s\n\n", v2GetFeedData[1]["audio_url"]))
-				markdown.WriteString(fmt.Sprintf("图片链接：%s\n\n", v2GetFeedData[1]["image_large_url"]))
+				markdown.WriteString(fmt.Sprintf("🎙️音频：[点击播放](%s)\n\n", v2GetFeedData[1]["audio_url"]))
+				markdown.WriteString(fmt.Sprintf("📽️视频：[点击播放](%s)\n\n", v2GetFeedData[1]["video_url"]))
+				markdown.WriteString(fmt.Sprintf("封面图：![图片](%s)\n\n", v2GetFeedData[1]["image_large_url"]))
 
 				response := map[string]interface{}{
 					"choices": []map[string]interface{}{
@@ -278,15 +278,11 @@ func SunoChat(c map[string]interface{}, ck string) (interface{}, *ErrorResponse)
 							"logprobs": nil,
 						},
 					},
-					"created": time.Now().Unix(),
-					"id":      "chatcmpl-7QyqpwdfhqwajicIEznoc6Q47XAyW",
-					"model":   c["model"].(string),
-					"object":  "chat.completion",
-					"usage": map[string]int{
-						"completion_tokens": 17,
-						"prompt_tokens":     57,
-						"total_tokens":      74,
-					},
+					"created":            time.Now().Unix(),
+					"id":                 "chatcmpl-7QyqpwdfhqwajicIEznoc6Q47XAyW",
+					"model":              c["model"].(string),
+					"object":             "chat.completion.chunk",
+					"system_fingerprint": "fp_44709d6fcb",
 				}
 
 				return response, nil

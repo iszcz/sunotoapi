@@ -3,6 +3,8 @@ package router
 import (
 	"fksunoapi/cfg"
 	"fksunoapi/serve"
+	"fmt"
+    "encoding/json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -78,12 +80,27 @@ func SunoChat() fiber.Handler {
 		} else {
 			ck = serve.ParseToken(ck)
 		}
-		serve.Session = serve.GetSession(ck)
+		//serve.Session = serve.GetSession(ck)
+		fmt.Println(data)
 		res, errResp := serve.SunoChat(data, ck)
-		if errResp != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(errResp)
-		}
-		return c.Status(fiber.StatusOK).JSON(res)
+
+		// 如果res不是[]byte类型，将其转换为JSON字符串以便打印
+        resJSON, err := json.Marshal(res)
+        if err != nil {
+            // 处理可能的错误
+            fmt.Println("Error marshalling response to JSON:", err)
+        } else {
+            // 打印JSON字符串
+            fmt.Println(string(resJSON))
+        }
+
+        if errResp != nil {
+            return c.Status(fiber.StatusInternalServerError).JSON(errResp)
+        }
+
+        c.Set("Content-Type", "application/json")
+
+        return c.Status(fiber.StatusOK).JSON(res)
 	}
 }
 

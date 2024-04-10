@@ -202,6 +202,34 @@ func GetLyricsTask(ids, c string) ([]byte, *ErrorResponse) {
 }
 
 func SunoChat(c map[string]interface{}, ck string) (interface{}, *ErrorResponse) {
+	
+
+	response := map[string]interface{}{
+	    "id": "chatcmpl-98vOKZ9TGPqxcZeyEp5O0QaMOKILh",
+	    "object": "chat.completion",
+	    "created": time.Now().Unix(),
+	    "model": "chirp-v3-0",
+		"choices": []map[string]interface{}{
+	        {
+	            "index": 0,
+	            "message": map[string]interface{}{
+	                "role": "assistant",
+	                "content": "\n\nHello! How can I assist you today?",
+	            },
+				"logprobs": nil,
+				"finish_reason": "stop",
+	        },
+		},
+		"usage": map[string]int{
+			"prompt_tokens":     19,
+			"completion_tokens": 9,
+			"total_tokens":      28,
+		},
+    	"system_fingerprint": "fp_3bc1b5746c",
+	}
+
+	return response, nil
+
 	lastUserContent := getLastUserContent(c)
 	d := map[string]interface{}{
 		"mv":                     c["model"].(string),
